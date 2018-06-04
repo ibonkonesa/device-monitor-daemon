@@ -1,5 +1,5 @@
 # Device Monitor Daemon
-PHP script that scan local network devices and save them on Firebase Realtime Database
+PHP script that scans local network devices and saves them on Firebase Realtime Database
 
 ## Installation
 
