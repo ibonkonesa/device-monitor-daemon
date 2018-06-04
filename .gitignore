@@ -1,0 +1,5 @@
+.env
+composer.lock
+google-service-account.json
+vendor
+.idea
