@@ -1,7 +1,7 @@
 # Device Monitor Daemon
 PHP script that scan local network devices and save them on Firebase Realtime Database
 
-## Install
+## Installation
 
 Clone this repository
 
@@ -15,7 +15,7 @@ Install composer dependencies
 $ composer install
 ```
 
-## Configure
+## Configuration
 
 There is a .env file where you can set some parameters. Firstly copy or rename the .env.example file
 
@@ -41,7 +41,7 @@ Directions are avalaible here: https://firebase.google.com/docs/admin/setup?hl=e
 
 Once you have created the project, you should put the google-services-account in the root project path
 
-## EXECUTION
+## Execution
 
 You must launch this script as a regular user using sudo
 
