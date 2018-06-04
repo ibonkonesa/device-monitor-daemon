@@ -31,7 +31,7 @@ The avalaible parameters are:
 
 -INTERFACE: network interface. Example: eth0, wlan0
 
--ARP_SCAN_PATH: absolute path for arp-scan binary (cron needs that path is absolute)
+-ARP_SCAN_PATH: absolute path for arp-scan binary (cron needs that that path is absolute)
 
 ## Firebase
 
