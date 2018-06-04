@@ -39,7 +39,7 @@ You also need to start a Firebase project and download the google-services-accou
 
 Directions are avalaible here: https://firebase.google.com/docs/admin/setup?hl=es-419
 
-Once you have created the project, you should put the google-services-account in the root project path
+Once you have created the project, you should put the google-services-account.json file in the project's root path
 
 ## Execution
 
@@ -48,7 +48,7 @@ You must launch this script as a regular user using sudo
 ```sh
 $ sudo php daemon.php
 ```
-or you can set a task in the root user's crontab.
+or you can set a cron task using root user
 
 
 ```
