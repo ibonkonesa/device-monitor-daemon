@@ -1,7 +1,9 @@
 # Device Monitor Daemon
 PHP script that scans local network devices and saves them on Firebase Realtime Database
 
-You can also see one POC about how to use this data here: https://github.com/ibonkonesa/device-monitor-client
+New devices are registered and you can set a timeout to delete old devices. Device can also be marked as "persistent" in order to not be deleted
+
+There is a POC about how to use generated data : https://github.com/ibonkonesa/device-monitor-client
 
 ## Installation
 
