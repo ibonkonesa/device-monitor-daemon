@@ -35,6 +35,8 @@ $firebase = (new Factory)
     ->withServiceAccount($serviceAccount)
     ->create();
 $database = $firebase->getDatabase();
+$messaging = $firebase->getMessaging();
+
 
 //PERFORM SCAN AND CREATE-UPDATE DEVICES
 $devices = arpScan();
@@ -48,6 +50,17 @@ foreach ($devices as $device) {
         $database->getReference('devices/' . $key . "/ip")->set($device['ip']);
 
     } else {
+        if (getenv('NOTIFY_NEW_DEVICE')) {
+            $message = \Kreait\Firebase\Messaging\MessageToTopic::fromArray([
+                'topic' => 'deviceNew',
+                'notification' => ['title' => 'New device discovered', 'body' => 'Device with ip ' . $device['ip'] . ' has joined your network'],
+                'data' => ['ip' => $device['ip'], 'mac' => $device['mac']]
+            ]);
+
+            $messaging->send($message);
+        }
+
+
         $newPost = $database
             ->getReference('devices')
             ->push($device);
@@ -55,13 +68,22 @@ foreach ($devices as $device) {
 }
 
 //DELETE TIMEOUT
-
 if (getenv('DELETE_INACTIVE_DEVICES')) {
     $timeout = getenv('DELETE_INACTIVE_DEVICES_AFTER');
     $limit = new \DateTime("-$timeout");
     $expiredDevices = $database->getReference('devices')->orderByChild('timestamp')->endAt($limit->getTimestamp())->getValue();
 
     foreach ($expiredDevices as $key => $device) {
+        if (getenv('NOTIFY_DELETE_DEVICE')) {
+            $message = \Kreait\Firebase\Messaging\MessageToTopic::fromArray([
+                'topic' => 'deviceDelete',
+                'notification' => ['title' => 'Device deleted', 'body' => 'Device with ip ' . $device['ip'] . ' has left your network'],
+                'data' => ['ip' => $device['ip'], 'mac' => $device['mac']]
+
+            ]);
+            $messaging->send($message);
+        }
+
         $database->getReference('devices/' . $key)->remove();
     }
 }

@@ -33,6 +33,10 @@ The avalaible parameters are:
 
 -ARP_SCAN_PATH: absolute path for arp-scan binary (cron needs that path is absolute)
 
+-NOTIFY_NEW_DEVICE (boolean): send push notification to deviceNew topic
+
+-NOTIFY_DELETE_DEVICE (boolean): send push notification to deviceDelete topic
+
 ## Firebase
 
 You also need to start a Firebase project and download the google-services-account.json
