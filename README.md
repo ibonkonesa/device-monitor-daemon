@@ -1,6 +1,8 @@
 # Device Monitor Daemon
 PHP script that scans local network devices and saves them on Firebase Realtime Database
 
+You can also see one POC about how to use this data here: https://github.com/ibonkonesa/device-monitor-client
+
 ## Installation
 
 Clone this repository
@@ -43,7 +45,7 @@ You also need to start a Firebase project and download the google-services-accou
 
 Directions are avalaible here: https://firebase.google.com/docs/admin/setup?hl=es-419
 
-Once you have created the project, you should put the google-services-account.json file in the project's root path
+Once you have created the project, you should put the google-service-account.json file in the project's root path
 
 ## Execution
 
