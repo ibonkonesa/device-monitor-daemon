@@ -1,6 +1,8 @@
 # Device Monitor Daemon
 PHP script that scans local network devices and saves them on Firebase Realtime Database
 
+You can also see one POC about how to use this data here: https://github.com/ibonkonesa/device-monitor-client
+
 ## Installation
 
 Clone this repository
