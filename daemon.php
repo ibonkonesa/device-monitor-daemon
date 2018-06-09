@@ -54,7 +54,7 @@ foreach ($devices as $device) {
             $message = \Kreait\Firebase\Messaging\MessageToTopic::fromArray([
                 'topic' => 'deviceNew',
                 'notification' => ['title' => 'New device discovered', 'body' => 'Device with ip ' . $device['ip'] . ' has joined your network'],
-                'data' => ['ip' => $device['ip'], 'mac' => $device['mac']]
+                'data' => ['topic' => 'deviceNew', 'ip' => $device['ip'], 'mac' => $device['mac']]
             ]);
 
             $messaging->send($message);
@@ -78,7 +78,7 @@ if (getenv('DELETE_INACTIVE_DEVICES')) {
             $message = \Kreait\Firebase\Messaging\MessageToTopic::fromArray([
                 'topic' => 'deviceDelete',
                 'notification' => ['title' => 'Device deleted', 'body' => 'Device with ip ' . $device['ip'] . ' has left your network'],
-                'data' => ['ip' => $device['ip'], 'mac' => $device['mac']]
+                'data' => ['topic' => 'deviceDelete', 'ip' => $device['ip'], 'mac' => $device['mac']]
 
             ]);
             $messaging->send($message);
