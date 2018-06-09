@@ -49,6 +49,21 @@ Directions are avalaible here: https://firebase.google.com/docs/admin/setup?hl=e
 
 Once you have created the project, you should put the google-service-account.json file in the project's root path
 
+Update rules:
+
+```sh
+{
+  "rules": {
+    ".read": true,
+    ".write": true,
+      
+      "devices": {
+       ".indexOn": ["mac", "timestamp"]
+    }
+  }
+}
+```
+
 ## Execution
 
 You must launch this script as a regular user using sudo
