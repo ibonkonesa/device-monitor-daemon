@@ -21,7 +21,8 @@ function arpScan()
             'ip' => $chunks[1],
             'mac' => $chunks[2],
             'desc' => $chunks[3],
-            'timestamp' => time()
+            'timestamp' => time(),
+            'keep' => false
         ];
     }
     return $devices;
@@ -56,10 +57,8 @@ foreach ($devices as $device) {
                 'notification' => ['title' => 'New device discovered', 'body' => 'Device with ip ' . $device['ip'] . ' has joined your network'],
                 'data' => ['topic' => 'deviceNew', 'ip' => $device['ip'], 'mac' => $device['mac']]
             ]);
-
             $messaging->send($message);
         }
-
 
         $newPost = $database
             ->getReference('devices')
@@ -74,17 +73,18 @@ if (getenv('DELETE_INACTIVE_DEVICES')) {
     $expiredDevices = $database->getReference('devices')->orderByChild('timestamp')->endAt($limit->getTimestamp())->getValue();
 
     foreach ($expiredDevices as $key => $device) {
-        if (getenv('NOTIFY_DELETE_DEVICE')) {
-            $message = \Kreait\Firebase\Messaging\MessageToTopic::fromArray([
-                'topic' => 'deviceDelete',
-                'notification' => ['title' => 'Device deleted', 'body' => 'Device with ip ' . $device['ip'] . ' has left your network'],
-                'data' => ['topic' => 'deviceDelete', 'ip' => $device['ip'], 'mac' => $device['mac']]
+        if (!$device['keep']) {
+            if (getenv('NOTIFY_DELETE_DEVICE')) {
+                $message = \Kreait\Firebase\Messaging\MessageToTopic::fromArray([
+                    'topic' => 'deviceDelete',
+                    'notification' => ['title' => 'Device deleted', 'body' => 'Device with ip ' . $device['ip'] . ' has left your network'],
+                    'data' => ['topic' => 'deviceDelete', 'ip' => $device['ip'], 'mac' => $device['mac']]
 
-            ]);
-            $messaging->send($message);
+                ]);
+                $messaging->send($message);
+            }
+            $database->getReference('devices/' . $key)->remove();
         }
-
-        $database->getReference('devices/' . $key)->remove();
     }
 }
 
